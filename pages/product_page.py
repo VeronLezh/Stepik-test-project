@@ -7,15 +7,12 @@ class ProductPage(BasePage):
 		self.browser.find_element(*ProductPageLocators.ADD_TO_CART).click()
 
 	def should_be_product_is_in_basket(self):
-		x_element = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME)
-		x = x_element.text
-		y_element = self.browser.find_element(*ProductPageLocators.PRODUCT_IN_BASKET_ALERT)
-		y=y_element.text
-		assert x in y, "Неправильный товар добавлен в корзину"
+		product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
+		message = self.browser.find_element(*ProductPageLocators.PRODUCT_IN_BASKET_ALERT).text
+		print(product_name, message)
+		assert message == product_name, f"{product_name} is not {message}"
 
 	def should_be_equal_price(self):
-		x_element = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
-		x = x_element.text
-		y_element = self.browser.find_element(*ProductPageLocators.BASKET_PRICE)
-		y=y_element.text
-		assert x in y, "Стоимость товара и цена в корзине не совпадают"
+		product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
+		basket_price = self.browser.find_element(*ProductPageLocators.BASKET_PRICE).text
+		assert product_price == basket_price, f"{product_price} not equal {basket_price}"
